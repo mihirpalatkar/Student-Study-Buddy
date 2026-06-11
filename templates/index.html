@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study Buddy</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="hero">
+        <h1>Student Study Buddy</h1>
+
+        <p>
+          Generate AI-powered quizzes, key points and revision questions from your study material.
+        </p>
+    </div>
+
+    <div class="upload-card">
+
+        <form action="/upload"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <label class="upload-box">
+
+                <input type="file"
+                       name="file"
+                       required>
+
+                <span>📄 Choose PDF File</span>
+
+            </label>
+
+            <label>
+                Difficulty Level
+            </label>
+
+            <select name="difficulty">
+
+                <option value="Easy">Easy</option>
+
+                <option value="Medium">Medium</option>
+
+                <option value="Hard">Hard</option>
+
+            </select>
+
+            <button type="submit">
+                Generate Quiz
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if pdf_file or questions %}
+
+    <div class="dashboard">
+
+        {% if pdf_file %}
+        <div class="card">
+
+            <div class="card-header">
+                PDF Preview
+            </div>
+
+            <iframe
+                src="{{ url_for('static', filename=pdf_file) }}">
+            </iframe>
+
+        </div>
+        {% endif %}
+
+        {% if questions %}
+        <div class="card">
+
+            <div class="card-header">
+                Generated Quiz
+            </div>
+
+            <div class="quiz-content">
+                <pre>{{ questions }}</pre>
+            </div>
+
+        </div>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
